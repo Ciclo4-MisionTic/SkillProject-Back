@@ -40,6 +40,8 @@ app.listen({ port: process.env.PORT || 4000 }, async () => {
   //         tipo: "ESPECIFICO",
   //       },
   //     ],
+  //    avances:'id avance o var con el avance a crear',
+  //    inscripciones:'id inscripcion o var con el inscripcion a crear',
   //   })
   //   .then((p) => {
   //     console.log("proyecto Creado", p);
