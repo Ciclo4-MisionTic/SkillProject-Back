@@ -1,6 +1,6 @@
 import { ProjectModel } from "./project";
 
-const resolverProjects = {
+const resolversProjects = {
   Query: {
     Proyectos: async () => {
       const proyectos = await ProjectModel.find();
@@ -53,4 +53,4 @@ const resolverProjects = {
     },
   },
 };
-export { resolverProjects };
+export { resolversProjects };

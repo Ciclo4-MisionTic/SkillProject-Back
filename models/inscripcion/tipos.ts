@@ -1,6 +1,6 @@
 import { gql } from "apollo-server-express";
 
-const tiposInscripcion = gql`
+const tipoInscripcion = gql`
   type Inscripcion {
     _id: ID!
     fechaIngreso: Date!
@@ -37,4 +37,4 @@ const tiposInscripcion = gql`
     eliminarInscripcion(_id: String!): Inscripcion
   }
 `;
-export { tiposInscripcion };
+export { tipoInscripcion };

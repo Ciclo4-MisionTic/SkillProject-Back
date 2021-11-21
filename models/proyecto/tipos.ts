@@ -1,6 +1,6 @@
 import { gql } from "apollo-server-core";
 
-const tiposProyecto = gql`
+const tipoProyecto = gql`
   type Proyecto {
     _id: ID!
     nombre: String!
@@ -49,4 +49,4 @@ const tiposProyecto = gql`
     ): Proyecto
   }
 `;
-export { tiposProyecto };
+export { tipoProyecto };

@@ -3,7 +3,7 @@ import express from "express";
 import { ApolloServer } from "apollo-server-express";
 import dotenv from "dotenv";
 import cors from "cors";
-import { typeDefs } from "./graphql/types";
+import { tipos, typeDefs } from "./graphql/types";
 import { resolvers } from "./graphql/resolvers";
 dotenv.config();
 
@@ -11,6 +11,7 @@ const puerto = process.env.PORT;
 
 const server = new ApolloServer({
   typeDefs: typeDefs,
+  tipos,
   resolvers: resolvers,
 });
 
