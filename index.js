@@ -1,17 +1,18 @@
-import express from 'express';
-import cors from 'cors';
+import express from "express";
+import cors from "cors";
 //import { ApolloServer } from 'apollo-server-express';
-import dotenv from 'dotenv';
-import conectarBD from './db/db.js';
+import dotenv from "dotenv";
+import conectarBD from "./db/db.js";
+import { projectModel } from "./modelos_esquemas/models/project/project.js";
 //import { tipos } from './graphql/types.js';
 //import { resolvers } from './graphql/resolvers.js';
 
 dotenv.config();
 
-const server = new ApolloServer({
-  typeDefs: tipos,
-  resolvers: resolvers,
-});
+// const server = new ApolloServer({
+//   typeDefs: tipos,
+//   resolvers: resolvers,
+// });
 
 const app = express();
 
@@ -21,9 +22,37 @@ app.use(cors());
 
 app.listen({ port: process.env.PORT || 4000 }, async () => {
   await conectarBD();
-  await server.start();
+  // await server.start();
 
-  server.applyMiddleware({ app });
+  // server.applyMiddleware({ app });
 
-  console.log('servidor listo');
+  // creacion Proyecto
+  const proyectoX = await projectModel
+    .create({
+      nombre: "Proyecto X",
+      fechaInicio: Date.now(),
+      fechaFin: new Date("2022/11/10"),
+      presupuesto: 12000,
+      lider: Usuario._id,
+      objetivos: [
+        {
+          objetivo1: {
+            descripcion: "objetivo especifico 1",
+            tipo: "ESPECIFICO",
+          },
+          objetivo2: {
+            descripcion: "objetivo especifico 2",
+            tipo: "ESPECIFICO",
+          },
+        },
+      ],
+    })
+    .then((p) => {
+      console.log("proyecto Creado", p);
+    })
+    .catch((e) => {
+      console.error("Error Creando proyecto", e);
+    });
+
+  console.log("servidor listo");
 });
