@@ -31,6 +31,7 @@ const projectSchema = new Schema({
     default: "NULO",
   },
   lider: {
+    // type: String,
     type: Schema.Types.ObjectId,
     ref: UserModel,
     required: true,

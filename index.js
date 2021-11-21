@@ -27,32 +27,26 @@ app.listen({ port: process.env.PORT || 4000 }, async () => {
   // server.applyMiddleware({ app });
 
   // creacion Proyecto
-  const proyectoX = await projectModel
-    .create({
-      nombre: "Proyecto X",
-      fechaInicio: Date.now(),
-      fechaFin: new Date("2022/11/10"),
-      presupuesto: 12000,
-      lider: Usuario._id,
-      objetivos: [
-        {
-          objetivo1: {
-            descripcion: "objetivo especifico 1",
-            tipo: "ESPECIFICO",
-          },
-          objetivo2: {
-            descripcion: "objetivo especifico 2",
-            tipo: "ESPECIFICO",
-          },
-        },
-      ],
-    })
-    .then((p) => {
-      console.log("proyecto Creado", p);
-    })
-    .catch((e) => {
-      console.error("Error Creando proyecto", e);
-    });
+  // const proyectoX = await projectModel
+  //   .create({
+  //     nombre: "test Project",
+  //     fechaInicio: Date.now(),
+  //     fechaFin: new Date("2022/11/10"),
+  //     presupuesto: 12000,
+  //     lider: "daniel", // aqui se pone el usuario a la hora de crear o el _id
+  //     objetivos: [
+  //       {
+  //         descripcion: "objetivo especifico1",
+  //         tipo: "ESPECIFICO",
+  //       },
+  //     ],
+  //   })
+  //   .then((p) => {
+  //     console.log("proyecto Creado", p);
+  //   })
+  //   .catch((e) => {
+  //     console.error("Error Creando proyecto", e);
+  //   });
 
   console.log("servidor listo");
 });
