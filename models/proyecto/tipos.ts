@@ -8,12 +8,18 @@ const tipoProyecto = gql`
     fechaInicio: Date!
     fechaFin: Date!
     estado: Enum_EstadoProyecto
-    faseProyecto: Enum_FaseProyecto
+    fase: Enum_FaseProyecto
     lider: Usuario!
+    objetivos: [Objetivo]
   }
 
-  input Objetivo {
+  type Objetivo {
     _id: ID!
+    descripcion: String!
+    tipo: String!
+  }
+
+  input crearObjetivo {
     descripcion: String!
     tipo: String!
   }
@@ -21,18 +27,20 @@ const tipoProyecto = gql`
   type Query {
     Proyectos: [Proyecto]
     Proyecto(_id: String!): Proyecto
+    # query para traer todos los proyectos de un lider
+    ProyectosLider(lider: String!): [Proyecto]
   }
 
   type Mutation {
     crearProyecto(
-      _id: ID!
       nombre: String!
       presupuesto: Float!
       fechaInicio: Date!
       fechaFin: Date!
       estado: Enum_EstadoProyecto
-      faseProyecto: Enum_FaseProyecto
+      fase: Enum_FaseProyecto
       lider: String!
+      objetivos: [crearObjetivo]
     ): Proyecto
 
     eliminarProyecto(_id: String!): Proyecto
@@ -44,8 +52,9 @@ const tipoProyecto = gql`
       fechaInicio: Date!
       fechaFin: Date!
       estado: Enum_EstadoProyecto
-      faseProyecto: Enum_FaseProyecto
+      fase: Enum_FaseProyecto
       lider: String!
+      objetivos: [crearObjetivo]
     ): Proyecto
   }
 `;

@@ -5,15 +5,16 @@ import { tipoInscripcion } from "../models/inscripcion/tipos";
 import { tipoProyecto } from "../models/proyecto/tipos";
 import { tipoUsuario } from "../models/usuario/tipos";
 
-const typeDefs = gql`
+const tiposGlobales = gql`
   scalar Date
 `;
+
 const tipos = [
+  tiposGlobales,
   tipoUsuario,
   tipoProyecto,
   tipoInscripcion,
   tipoEnums,
   tipoAvance,
 ];
-
-export { typeDefs, tipos };
+export { tipos };

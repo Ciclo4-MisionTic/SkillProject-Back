@@ -19,8 +19,8 @@ const tipoAvance = gql`
       fecha: Date!
       descripcion: String!
       # observaciones: [String!]
-      proyecto: Proyecto!
-      creadoPor: Usuario!
+      proyecto: String!
+      creadoPor: String!
     ): Avance
 
     eliminarAvance(_id: String!): Avance
@@ -29,8 +29,8 @@ const tipoAvance = gql`
       fecha: Date!
       descripcion: String!
       # observaciones: [String!]
-      proyecto: Proyecto!
-      creadoPor: Usuario!
+      proyecto: String!
+      creadoPor: String!
     ): Avance
   }
 `;

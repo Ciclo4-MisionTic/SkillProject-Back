@@ -1,6 +1,6 @@
 import { connect } from "mongoose";
 const conectarBD = async () => {
-  return await connect(process.env.DB_URL)
+  return await connect(process.env.DATABASE_URL)
     .then(() => {
       console.log("conexion exitosa");
     })

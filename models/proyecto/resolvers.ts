@@ -2,8 +2,8 @@ import { ProjectModel } from "./project";
 
 const resolversProjects = {
   Query: {
-    Proyectos: async () => {
-      const proyectos = await ProjectModel.find();
+    Proyectos: async (parent, args) => {
+      const proyectos = await ProjectModel.find().populate("lider");
       return proyectos;
     },
     Proyecto: async (parent, args) => {
@@ -11,6 +11,12 @@ const resolversProjects = {
         _id: args._id,
       }).populate("lider");
       return findProject;
+    },
+    ProyectosLider: async (parent, args) => {
+      const proyectos = await ProjectModel.find({ lider: args.lider }).populate(
+        "lider"
+      );
+      return proyectos;
     },
   },
   Mutation: {
@@ -22,8 +28,8 @@ const resolversProjects = {
         lider: args.lider,
         fechaInicio: args.fechaInicio,
         fechaFin: args.fechaFin,
-        faseProyecto: args.faseProyecto,
-        // objetivos: args.objetivos,
+        fase: args.faseProyecto,
+        objetivos: args.objetivos,
       });
       return proyectoCreado;
     },
@@ -45,8 +51,8 @@ const resolversProjects = {
           lider: args.lider,
           fechaInicio: args.fechaInicio,
           fechaFin: args.fechaFin,
-          faseProyecto: args.faseProyecto,
-          // objetivos: args.objetivos,
+          fase: args.faseProyecto,
+          objetivos: args.objetivos,
         },
         { new: true }
       );
