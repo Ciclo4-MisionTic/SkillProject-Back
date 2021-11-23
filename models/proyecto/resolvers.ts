@@ -3,9 +3,8 @@ import { ProjectModel } from "./project";
 const resolversProjects = {
   Query: {
     Proyectos: async (parent, args) => {
-      const proyectos = await ProjectModel.find()
-        .populate("lider")
-        .populate("objetivos");
+      const proyectos = await ProjectModel.find().populate("lider");
+
       return proyectos;
     },
     Proyecto: async (parent, args) => {
