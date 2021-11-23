@@ -26,14 +26,15 @@ const resolversProjects = {
     crearProyecto: async (parent, args) => {
       const proyectoCreado = await ProjectModel.create({
         nombre: args.nombre,
-        estado: args.estado,
         presupuesto: args.presupuesto,
-        lider: args.lider,
         fechaInicio: args.fechaInicio,
         fechaFin: args.fechaFin,
-        fase: args.faseProyecto,
+        lider: args.lider,
+        estado: args.estado,
+        fase: args.fase,
         objetivos: args.objetivos,
       });
+
       return proyectoCreado;
     },
     eliminarProyecto: async (parent, args) => {

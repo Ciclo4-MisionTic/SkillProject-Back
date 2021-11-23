@@ -14,7 +14,7 @@ interface Project {
   fechaFin: Date;
   presupuesto: number;
   estado: Enum_EstadoProyecto;
-  faseProyecto: Enum_FaseProyecto;
+  fase: Enum_FaseProyecto;
   lider: Schema.Types.ObjectId;
   objetivos: [{ descripcion: String; tipo: Enum_TipoObjetivo }];
   avance: Schema.Types.ObjectId;
@@ -44,7 +44,7 @@ const projectSchema = new Schema<Project>({
     enum: Enum_EstadoProyecto,
     default: Enum_EstadoProyecto.INACTIVO,
   },
-  faseProyecto: {
+  fase: {
     type: String,
     enum: Enum_FaseProyecto,
     default: Enum_FaseProyecto.NULO,
