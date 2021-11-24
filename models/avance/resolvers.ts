@@ -17,11 +17,9 @@ const resolversAdvancement = {
         fecha: args.fecha,
         descripcion: args.descripcion,
         proyecto: args.proyecto,
+        observaciones: args.observaciones,
         creadoPor: args.creadoPor,
       });
-      if (Object.keys(args).includes("observaciones")) {
-        avanceCreado.observaciones = args.observaciones;
-      }
       return avanceCreado;
     },
 
@@ -39,13 +37,12 @@ const resolversAdvancement = {
           fecha: args.fecha,
           descripcion: args.descripcion,
           proyecto: args.proyecto,
+          observaciones: args.observaciones,
           creadoPor: args.creadoPor,
         },
         { new: true }
       );
-      if (Object.keys(args).includes("observaciones")) {
-        avanceEditado.observaciones = args.observaciones;
-      }
+
       return avanceEditado;
     },
   },
