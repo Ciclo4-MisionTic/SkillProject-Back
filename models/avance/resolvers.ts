@@ -16,16 +16,20 @@ const resolversAdvancement = {
       const avanceCreado = await avanceModel.create({
         fecha: args.fecha,
         descripcion: args.descripcion,
-        observaciones: args.observaciones,
         proyecto: args.proyecto,
         creadoPor: args.creadoPor,
       });
+      if (Object.keys(args).includes("observaciones")) {
+        avanceCreado.observaciones = args.observaciones;
+      }
+      return avanceCreado;
     },
 
     eliminarAvance: async (parent, args) => {
       const avanceEliminado = await avanceModel.findByIdAndDelete({
         _id: args._id,
       });
+      return avanceEliminado;
     },
 
     editarAvance: async (parent, args) => {
@@ -34,12 +38,15 @@ const resolversAdvancement = {
         {
           fecha: args.fecha,
           descripcion: args.descripcion,
-          observaciones: args.observaciones,
           proyecto: args.proyecto,
           creadoPor: args.creadoPor,
         },
         { new: true }
       );
+      if (Object.keys(args).includes("observaciones")) {
+        avanceEditado.observaciones = args.observaciones;
+      }
+      return avanceEditado;
     },
   },
 };

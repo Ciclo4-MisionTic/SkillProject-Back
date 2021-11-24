@@ -22,6 +22,7 @@ const tipoEnums = gql`
     INICIADO
     DESARROLLO
     TERMINADO
+    NULO
   }
 
   enum Enum_TipoObjetivo {
