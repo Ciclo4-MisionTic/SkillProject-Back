@@ -26,6 +26,7 @@ const tipoAvance = gql`
     eliminarAvance(_id: String!): Avance
 
     editarAvance(
+      _id: String!
       fecha: Date!
       descripcion: String!
       observaciones: [String]
