@@ -31,7 +31,7 @@ const tipoUsuario = gql`
       apellido: String!
       identificacion: String!
       correo: String!
-      estado: Enum_EstadoUsuario!
+      estado: Enum_EstadoUsuario
     ): Usuario
   }
 `;
