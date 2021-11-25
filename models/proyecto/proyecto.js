@@ -2,17 +2,6 @@ import mongoose from "mongoose";
 import { UserModel } from "../usuario/usuario.js";
 const { Schema, model } = mongoose;
 
-// interface Proyecto {
-//   nombre: string;
-//   presupuesto: number;
-//   fechaInicio: Date;
-//   fechaFin: Date;
-//   estado: Enum_EstadoProyecto;
-//   fase: Enum_FaseProyecto;
-//   lider: Schema.Types.ObjectId;
-//   objetivos: [{ descripcion: String; tipo: Enum_TipoObjetivo }];
-// }
-
 const projectSchema = new Schema(
   {
     nombre: {
