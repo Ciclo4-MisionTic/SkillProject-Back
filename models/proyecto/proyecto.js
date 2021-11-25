@@ -1,7 +1,7 @@
 import mongoose from "mongoose";
-import { InscriptionModel } from "../inscripcion/inscripcion";
-import { UserModel } from "../usuario/usuario";
-import { ModeloAvance } from "../avance/avance";
+import { InscriptionModel } from "../inscripcion/inscripcion.js";
+import { UserModel } from "../usuario/usuario.js";
+import { ModeloAvance } from "../avance/avance.js";
 
 const { Schema, model } = mongoose;
 
@@ -52,20 +52,20 @@ const projectSchema = new Schema({
       },
     },
   ],
-  // inscripciones: [
-  //   {
-  //     type: Schema.Types.ObjectId,
-  //     ref: InscriptionModel,
-  //     required: true,
-  //   },
-  // ],
-  // avances: [
-  //   {
-  //     type: Schema.Types.ObjectId,
-  //     ref: modeloAvance,
-  //     required: true,
-  //   },
-  // ],
+  inscripciones: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: InscriptionModel,
+      required: true,
+    },
+  ],
+  avances: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: ModeloAvance,
+      required: true,
+    },
+  ],
 });
 
 const ProjectModel = model("Project", projectSchema);

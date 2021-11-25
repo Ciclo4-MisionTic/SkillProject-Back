@@ -11,10 +11,17 @@ const tiposProyecto = gql`
     fase: Enum_FaseProyecto
     lider: Usuario!
     objetivos: Objetivos
-    # inscripciones: inscripciones
-    # avances:Avances
   }
-
+  enum Enum_EstadoProyecto {
+    ACTIVO
+    INACTIVO
+  }
+  enum Enum_FaseProyecto {
+    INICIADO
+    EN_DESARROLLO
+    TERMINADO
+    NULO
+  }
   type Objetivos {
     _id: ID!
     descripcion: String
@@ -28,7 +35,7 @@ const tiposProyecto = gql`
 
   type Query {
     Proyectos: [Proyecto]
-    Protecto(_id: String!): Proyecto
+    Proyecto(_id: String!): Proyecto
   }
 
   type Mutation {
