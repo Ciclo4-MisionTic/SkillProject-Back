@@ -9,7 +9,7 @@ const tiposProyecto = gql`
     presupuesto: Float!
     estado: Enum_EstadoProyecto
     fase: Enum_FaseProyecto
-    lider: Usuario!
+    # lider: Usuario!
     objetivos: Objetivos
   }
   enum Enum_EstadoProyecto {

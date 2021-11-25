@@ -1,71 +1,81 @@
 import mongoose from "mongoose";
-import { InscriptionModel } from "../inscripcion/inscripcion.js";
 import { UserModel } from "../usuario/usuario.js";
-import { ModeloAvance } from "../avance/avance.js";
-
 const { Schema, model } = mongoose;
 
-const projectSchema = new Schema({
-  nombre: {
-    type: String,
-    required: true,
-    unique: true,
-  },
-  fechaInicio: {
-    type: Date,
-    required: true,
-  },
-  fechaFin: {
-    type: Date,
-    required: true,
-  },
-  presupuesto: {
-    type: Number,
-    required: true,
-  },
-  estado: {
-    type: String,
-    enum: ["ACTIVO", "INACTIVO"],
-    default: "INACTIVO",
-  },
-  fase: {
-    type: String,
-    enum: ["INICIADO", "EN_DESARROLLO", "TERMINADO", "NULO"],
-    default: "NULO",
-  },
-  lider: {
-    // type: String,
-    type: Schema.Types.ObjectId,
-    ref: UserModel,
-    required: true,
-  },
-  objetivos: [
-    {
-      descripcion: {
-        type: String,
-        required: true,
-      },
-      tipo: {
-        type: String,
-        enum: ["GENERAL", "ESPECIFICO"],
-        required: true,
-      },
-    },
-  ],
-  inscripciones: [
-    {
-      type: Schema.Types.ObjectId,
-      ref: InscriptionModel,
+// interface Proyecto {
+//   nombre: string;
+//   presupuesto: number;
+//   fechaInicio: Date;
+//   fechaFin: Date;
+//   estado: Enum_EstadoProyecto;
+//   fase: Enum_FaseProyecto;
+//   lider: Schema.Types.ObjectId;
+//   objetivos: [{ descripcion: String; tipo: Enum_TipoObjetivo }];
+// }
+
+const projectSchema = new Schema(
+  {
+    nombre: {
+      type: String,
       required: true,
     },
-  ],
-  avances: [
-    {
-      type: Schema.Types.ObjectId,
-      ref: ModeloAvance,
+    presupuesto: {
+      type: Number,
       required: true,
     },
-  ],
+    fechaInicio: {
+      type: Date,
+      required: true,
+    },
+    fechaFin: {
+      type: Date,
+      required: true,
+    },
+    estado: {
+      type: String,
+      enum: ["ACTIVO", "INACTIVO"],
+      default: "INACTIVO",
+    },
+    fase: {
+      type: String,
+      enum: ["INICIADO", "DESARROLLO", "TERMINADO", "NULO"],
+      default: "NULO",
+    },
+    lider: {
+      type: Schema.Types.ObjectId,
+      required: true,
+      ref: UserModel,
+    },
+    objetivos: [
+      {
+        descripcion: {
+          type: String,
+          required: true,
+        },
+        tipo: {
+          type: String,
+          enum: ["GENERAL", "ESPECIFICO"],
+          required: true,
+        },
+      },
+    ],
+  },
+  {
+    toJSON: { virtuals: true }, // So `res.json()` and other `JSON.stringify()` functions include virtuals
+    toObject: { virtuals: true }, // So `console.log()` and other functions that use `toObject()` include virtuals
+  }
+);
+
+projectSchema.virtual("avances", {
+  ref: "Avance",
+  localField: "_id",
+  foreignField: "proyecto",
+});
+
+projectSchema.virtual("inscripciones", {
+  ref: "Inscripcion",
+  localField: "_id",
+  foreignField: "proyecto",
 });
 
 const ProjectModel = model("Project", projectSchema);
