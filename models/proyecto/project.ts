@@ -21,66 +21,65 @@ interface Project {
   inscripcion: Schema.Types.ObjectId;
 }
 
-const projectSchema = new Schema<Project>({
-  nombre: {
-    type: String,
-    required: true,
-    unique: true,
-  },
-  fechaInicio: {
-    type: Date,
-    required: true,
-  },
-  fechaFin: {
-    type: Date,
-    required: true,
-  },
-  presupuesto: {
-    type: Number,
-    required: true,
-  },
-  estado: {
-    type: String,
-    enum: Enum_EstadoProyecto,
-    default: Enum_EstadoProyecto.INACTIVO,
-  },
-  fase: {
-    type: String,
-    enum: Enum_FaseProyecto,
-    default: Enum_FaseProyecto.NULO,
-  },
-  lider: {
-    type: Schema.Types.ObjectId,
-    ref: UserModel,
-    required: true,
-  },
-  objetivos: [
-    {
-      descripcion: {
-        type: String,
-        required: true,
-      },
-      tipo: {
-        type: String,
-        enum: Enum_TipoObjetivo,
-        required: true,
-      },
+const projectSchema = new Schema<Project>(
+  {
+    nombre: {
+      type: String,
+      required: true,
+      unique: true,
     },
-  ],
-  // avance: [
-  //   {
-  //     type: Schema.Types.ObjectId,
-  //     ref: avanceModel,
-  //     required: true,
-  //   },
-  // ],
-  // inscripcion: [
-  //   {
-  //     type: Schema.Types.ObjectId,
-  //     ref: inscripcionModel,
-  //     required: true,
-  //   },
-  // ],
+    fechaInicio: {
+      type: Date,
+      required: true,
+    },
+    fechaFin: {
+      type: Date,
+      required: true,
+    },
+    presupuesto: {
+      type: Number,
+      required: true,
+    },
+    estado: {
+      type: String,
+      enum: Enum_EstadoProyecto,
+      default: Enum_EstadoProyecto.INACTIVO,
+    },
+    fase: {
+      type: String,
+      enum: Enum_FaseProyecto,
+      default: Enum_FaseProyecto.NULO,
+    },
+    lider: {
+      type: Schema.Types.ObjectId,
+      ref: UserModel,
+      required: true,
+    },
+    objetivos: [
+      {
+        descripcion: {
+          type: String,
+          required: true,
+        },
+        tipo: {
+          type: String,
+          enum: Enum_TipoObjetivo,
+          required: true,
+        },
+      },
+    ],
+  },
+  {}
+);
+projectSchema.virtual("", {
+  ref: "",
+  localField: "",
+  foreignField: "",
+});
+projectSchema.virtual("", {
+  ref: "",
+  localField: "",
+  foreignField: "",
 });
 const ProjectModel = model("Project", projectSchema);
 
