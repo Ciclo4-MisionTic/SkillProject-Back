@@ -2,14 +2,23 @@ import { ProjectModel } from "./proyecto.js";
 const resolversProyecto = {
   Query: {
     Proyectos: async (parent, args) => {
-      const proyectosEncontrados = await ProjectModel.find().populate("lider");
+      const proyectosEncontrados = await ProjectModel.find()
+        .populate("lider")
+        .populate("avances")
+        .populate("inscripciones");
       return proyectosEncontrados;
     },
     Proyecto: async (parent, args) => {
       const proyectoEncontrado = await ProjectModel.findOne({
         _id: args._id,
-      }).populate("lider");
+      })
+        .populate("lider")
+        .populate("avances")
+        .populate("inscripciones");
       return proyectoEncontrado;
+    },
+    ProyectosLider: async (parent, args) => {
+      proyectosPorLider = await ProjectModel.find({ lider: args.lider });
     },
   },
   Mutation: {

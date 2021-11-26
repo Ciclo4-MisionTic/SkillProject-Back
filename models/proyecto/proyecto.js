@@ -63,7 +63,7 @@ projectSchema.virtual("avances", {
 });
 
 projectSchema.virtual("inscripciones", {
-  ref: "Inscripcion",
+  ref: "Inscription",
   localField: "_id",
   foreignField: "proyecto",
 });
