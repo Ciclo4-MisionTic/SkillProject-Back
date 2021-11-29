@@ -8,6 +8,9 @@ const tipoUsuario = gql`
     correo: String!
     rol: Enum_Rol!
     estado: Enum_EstadoUsuario
+    proyectos: [Proyecto]
+    avances: [Avance]
+    inscripciones: [Inscripcion]
   }
 
   type Query {
@@ -20,6 +23,7 @@ const tipoUsuario = gql`
       apellido: String!
       identificacion: String!
       correo: String!
+      rol: Enum_Rol
       estado: Enum_EstadoUsuario
     ): Usuario
 

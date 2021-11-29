@@ -10,43 +10,68 @@ interface User {
   estado: Enum_EstadoUsuario;
 }
 
-const userSchema = new Schema<User>({
-  correo: {
-    type: String,
-    required: true,
-    unique: true,
-    validate: {
-      validator: function (v) {
-        return /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(v);
+const userSchema = new Schema<User>(
+  {
+    correo: {
+      type: String,
+      required: true,
+      unique: true,
+      validate: {
+        validator: function (v) {
+          return /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(v);
+        },
+        message: "Please enter a valid email",
       },
-      message: "Please enter a valid email",
+    },
+
+    identificacion: {
+      type: String,
+      required: true,
+      unique: true,
+    },
+    nombre: {
+      type: String,
+      required: true,
+    },
+    apellido: {
+      type: String,
+      required: true,
+    },
+    rol: {
+      type: String,
+      enum: Enum_Rol,
+      required: true,
+    },
+    estado: {
+      type: String,
+      enum: Enum_EstadoUsuario,
+      default: Enum_EstadoUsuario.PENDIENTE,
     },
   },
+  {
+    toJSON: { virtuals: true }, // So `res.json()` and other `JSON.stringify()` functions include virtuals
+    toObject: { virtuals: true }, // So `console.log()` and other functions that use `toObject()` include virtuals
+  }
+);
 
-  identificacion: {
-    type: String,
-    required: true,
-    unique: true,
-  },
-  nombre: {
-    type: String,
-    required: true,
-  },
-  apellido: {
-    type: String,
-    required: true,
-  },
-  rol: {
-    type: String,
-    enum: Enum_Rol,
-    required: true,
-  },
-  estado: {
-    type: String,
-    enum: Enum_EstadoUsuario,
-    default: Enum_EstadoUsuario.PENDIENTE,
-  },
+userSchema.virtual("avances", {
+  ref: "Avance",
+  localField: "_id",
+  foreignField: "creadoPor",
 });
+
+userSchema.virtual("inscripciones", {
+  ref: "Inscripcion",
+  localField: "_id",
+  foreignField: "estudiante",
+});
+
+userSchema.virtual("proyectos", {
+  ref: "Project",
+  localField: "_id",
+  foreignField: "lider",
+});
+
 const UserModel = model("User", userSchema);
 
 export { UserModel };

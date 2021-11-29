@@ -34,6 +34,6 @@ const avanceSchema = new Schema<Avance>({
   },
 });
 
-const avanceModel = model("avance", avanceSchema);
+const avanceModel = model("Avance", avanceSchema);
 
 export { avanceModel };

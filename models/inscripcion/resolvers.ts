@@ -1,9 +1,15 @@
+import { ProjectModel } from "../proyecto/project";
+import { UserModel } from "../usuario/user";
 import { inscripcionModel } from "./inscripcion";
 
 const resolversInscription = {
   Query: {
     Inscripciones: async () => {
-      const inscripciones = await inscripcionModel.find();
+      const inscripciones = await inscripcionModel
+        .find()
+        .populate("estudiante")
+        .populate("proyecto");
+
       return inscripciones;
     },
     Inscripcion: async (parent, args) => {
