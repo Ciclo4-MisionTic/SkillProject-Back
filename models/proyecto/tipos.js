@@ -11,7 +11,7 @@ const tiposProyecto = gql`
     fase: Enum_FaseProyecto
     lider: Usuario!
     objetivos: [Objetivos]
-    # avances: [Avance]
+    avances: [Avance]
     # inscripciones: [Inscripcion]
   }
 
@@ -41,6 +41,16 @@ const tiposProyecto = gql`
     lider: String
     objetivos: InputObjetivos
   }
+  input camposCreacionProyecto {
+    nombre: String!
+    fechaInicio: Date!
+    fechaFin: Date!
+    presupuesto: Float!
+    estado: Enum_EstadoProyecto
+    fase: Enum_FaseProyecto
+    lider: String!
+    objetivos: InputObjetivos
+  }
 
   type Query {
     Proyectos: [Proyecto]
@@ -49,16 +59,7 @@ const tiposProyecto = gql`
   }
 
   type Mutation {
-    crearProyecto(
-      nombre: String!
-      fechaInicio: Date!
-      fechaFin: Date!
-      presupuesto: Float!
-      estado: Enum_EstadoProyecto
-      fase: Enum_FaseProyecto
-      lider: String!
-      objetivos: InputObjetivos
-    ): Proyecto
+    crearProyecto(campos: camposCreacionProyecto): Proyecto
 
     eliminarProyecto(_id: String!): Proyecto
 
