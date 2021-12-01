@@ -10,7 +10,7 @@ const tiposUsuario = gql`
     rol: Enum_Rol!
     estado: Enum_EstadoUsuario
     # inscripciones: [Inscripcion]
-    # avancesCreados: [Avance]
+    avancesCreados: [Avance]
     proyectosLiderados: [Proyecto]
   }
   type Query {
