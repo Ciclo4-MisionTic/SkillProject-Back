@@ -68,6 +68,6 @@ projectSchema.virtual("inscripciones", {
   foreignField: "proyecto",
 });
 
-const ProjectModel = model("Projecto", projectSchema);
+const ProjectModel = model("Proyecto", projectSchema);
 
 export { ProjectModel };
