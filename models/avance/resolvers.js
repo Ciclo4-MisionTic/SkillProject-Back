@@ -18,13 +18,14 @@ const resolversAvance = {
       const avanceCreado = ModeloAvance.create({
         fecha: args.fecha,
         descripcion: args.descripcion,
+        observaciones: args.observaciones,
         proyecto: args.proyecto,
         creadoPor: args.creadoPor,
       });
       return avanceCreado;
     },
     editarObservaciones: async (parents, args) => {
-      const observacionEditado = await ModeloAvance.UserModel.findByIdAndUpdate(
+      const observacionEditado = await ModeloAvance.findByIdAndUpdate(
           args._id,
           {
             observaciones: args.observaciones,
@@ -35,7 +36,7 @@ const resolversAvance = {
         return observacionEditado;
     },
     editarDescripcion: async (parents, args) => {
-      const descripcionEditado = await ModeloAvance.UserModel.findByIdAndUpdate(
+      const descripcionEditado = await ModeloAvance.findByIdAndUpdate(
           args._id,
           {
             descripcion: args.descripcion,
@@ -50,3 +51,4 @@ const resolversAvance = {
 };
 
 export { resolversAvance };
+
