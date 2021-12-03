@@ -2,20 +2,16 @@ import { UserModel } from './usuario.js';
 import bcrypt from 'bcrypt';
 
 const resolversUsuario = {
+  // Usuario: {
+  //   inscripciones: async (parent, args, context) => {
+  //     return InscriptionModel.find({ estudiante: parent._id });
+  //   },
+  // },
   Query: {
+    //HU_004: Como administrador podré ver la información de los usuarios registrados en la plataforma
+    //HU_010: Como lider podré ver la información de los estudiantes registrados en la plataforma
     Usuarios: async (parent, args, context) => {
-      const usuarios = await UserModel.find().populate([
-        // {
-        //   path: 'inscripciones',
-        //   populate: {
-        //     path: 'proyecto',
-        //     populate: [{ path: 'lider' }, { path: 'avances' }],
-        //   },
-        // },
-        // {
-        //   path: 'proyectosLiderados',
-        // },
-      ]);
+      const usuarios = await UserModel.find({...args.filtro});
       return usuarios;
     },
     Usuario: async (parent, args) => {
@@ -42,6 +38,8 @@ const resolversUsuario = {
 
       return usuarioCreado;
     },
+    //HU_005: Como admistrador podré cambiar el estado del usuario
+    //HU_011: Como lider podré cambiar el estado del estudiante de “Pendiente” a “Autorizado”
     editarUsuario: async (parent, args) => {
       const usuarioEditado = await UserModel.findByIdAndUpdate(
         args._id,
@@ -56,6 +54,25 @@ const resolversUsuario = {
       );
 
       return usuarioEditado;
+    },
+    //HU_003: Como usuario podré ingresar los datos que deseo actualizar
+    editarPerfil: async (parent, args) => {
+      const salt = await bcrypt.genSalt(10);
+      const hashedPassword = await bcrypt.hash(args.password, salt);
+      const perfilEditado = await UserModel.findByIdAndUpdate(
+        args._id,
+        {
+          nombre: args.nombre,
+          apellido: args.apellido,
+          identificacion: args.identificacion,
+          correo: args.correo,
+          rol: args.rol,
+          password: hashedPassword,
+        },
+        { new: true }
+      );
+
+      return perfilEditado;
     },
     eliminarUsuario: async (parent, args) => {
       if (Object.keys(args).includes('_id')) {

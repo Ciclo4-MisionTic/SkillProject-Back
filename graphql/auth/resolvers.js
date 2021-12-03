@@ -4,6 +4,7 @@ import { generateToken } from '../../utils/tokenUtils.js';
 
 const resolversAutenticacion = {
   Mutation: {
+    //HU_001: podré ingresar los datos de registro (Incluyendo elegir el rol al que aspiro)
     registro: async (parent, args) => {
       const salt = await bcrypt.genSalt(10);
       const hashedPassword = await bcrypt.hash(args.password, salt);
@@ -28,6 +29,7 @@ const resolversAutenticacion = {
       };
     },
 
+    //HU_002: podré ingresar mi correo y contraseña para ser validados
     login: async (parent, args) => {
       const usuarioEcontrado = await UserModel.findOne({ correo: args.correo });
       if (await bcrypt.compare(args.password, usuarioEcontrado.password)) {
