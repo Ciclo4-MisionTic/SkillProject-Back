@@ -66,6 +66,14 @@ const tiposProyecto = gql`
     actualizarProyecto(_id: String!, campos: camposProyecto): Proyecto
 
     crearObjetivos(idProyecto: String!, campos: camposObjetivos!): Proyecto
+
+    # actualizarObjetivos():Proyecto
+
+    # eliminarObjetivos():Proyecto
+
+    # abrirProyecto():Proyecto
+
+    # cerrarProyecto():Proyecto
   }
 `;
 export { tiposProyecto };
