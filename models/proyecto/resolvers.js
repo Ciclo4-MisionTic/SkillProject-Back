@@ -1,3 +1,4 @@
+import { UserModel } from "../usuario/usuario.js";
 import { ProjectModel } from "./proyecto.js";
 const resolversProyecto = {
   Proyecto: {
@@ -15,6 +16,7 @@ const resolversProyecto = {
           path: "avances",
           populate: [{ path: "creadoPor" }],
         },
+        { path: "lider" },
         // { path: "inscripciones",populate:[{}] },
       ]);
       return proyectosEncontrados;

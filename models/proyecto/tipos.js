@@ -69,7 +69,7 @@ const tiposProyecto = gql`
     editarObjetivo(
       idProyecto: String!
       indexObjetivo: Int!
-      campos: camposObjetivo!
+      campos: camposObjetivos!
     ): Proyecto
 
     eliminarObjetivo(idProyecto: String!, idObjetivo: String!): Proyecto
