@@ -1,26 +1,15 @@
-import mongoose from "mongoose";
-import { ProjectModel } from "../proyecto/proyecto.js";
-import { UserModel } from "../usuario/usuario.js";
+import mongoose from 'mongoose';
+import { ProjectModel } from '../proyecto/proyecto.js';
+import { UserModel } from '../usuario/usuario.js';
 
 const { Schema, model } = mongoose;
 
-//se cre el esquema de inscripcion
-const inscriptionSchema = new Schema({
-  proyecto: {
-    type: Schema.Types.ObjectId,
-    ref: ProjectModel, //referencia al modelo de proyectos
-    required: true,
-  },
-  estudiante: {
-    type: Schema.Types.ObjectId,
-    ref: UserModel, //referencia al modelo de usuarios
-    required: true,
-  },
 
+const inscriptionSchema = new Schema({
   estado: {
     type: String,
-    enum: ["ACEPTADO", "RECHAZADO", "PENDIENTE"], // se coloca pendiente porque está por defecto
-    default: "PENDIENTE",
+    enum: ['ACEPTADO', 'RECHAZADO', 'PENDIENTE'],
+    default: 'PENDIENTE',
     required: true,
   },
   fechaIngreso: {
@@ -31,8 +20,18 @@ const inscriptionSchema = new Schema({
     type: Date,
     required: false,
   },
+  proyecto: {
+    type: Schema.Types.ObjectId,
+    ref: ProjectModel,
+    required: true,
+  },
+  estudiante: {
+    type: Schema.Types.ObjectId,
+    ref: UserModel,
+    required: true,
+  },
 });
 
-const InscriptionModel = model("Inscripcion", inscriptionSchema); //modelo de inscripción
+const InscriptionModel = model('Inscripcion', inscriptionSchema, 'Inscripciones');
 
 export { InscriptionModel };
