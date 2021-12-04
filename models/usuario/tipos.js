@@ -13,8 +13,17 @@ const tiposUsuario = gql`
     avancesCreados: [Avance]
     proyectosLiderados: [Proyecto]
   }
+
+  input FiltroUsuarios {
+    _id: ID
+    identificacion: String
+    correo: String
+    rol: Enum_Rol
+    estado: Enum_EstadoUsuario
+  }
+
   type Query {
-    Usuarios: [Usuario]
+    Usuarios(filtro:FiltroUsuarios): [Usuario]
     Usuario(_id: String!): Usuario
   }
   type Mutation {
@@ -37,6 +46,15 @@ const tiposUsuario = gql`
       estado: Enum_EstadoUsuario
     ): Usuario
 
+    editarPerfil(
+      _id: String!
+      nombre: String
+      apellido: String
+      identificacion: String
+      correo: String
+      rol: Enum_Rol
+      password: String
+    ): Usuario
     eliminarUsuario(_id: String, correo: String): Usuario
   }
 `;
