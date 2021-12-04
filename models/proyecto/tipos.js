@@ -39,7 +39,6 @@ const tiposProyecto = gql`
     estado: Enum_EstadoProyecto
     fase: Enum_FaseProyecto
     lider: String
-    objetivos: InputObjetivos
   }
   input camposCreacionProyecto {
     nombre: String!
@@ -67,7 +66,11 @@ const tiposProyecto = gql`
 
     crearObjetivos(idProyecto: String!, campos: camposObjetivos!): Proyecto
 
-    # actualizarObjetivos():Proyecto
+    actualizarObjetivos(
+      idProyecto: String!
+      idObjetivo: String!
+      campos: camposObjetivos
+    ): Proyecto
 
     # eliminarObjetivos():Proyecto
 

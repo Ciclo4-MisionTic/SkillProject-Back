@@ -2,10 +2,14 @@ import { ProjectModel } from "./proyecto.js";
 const resolversProyecto = {
   Query: {
     Proyectos: async (parent, args) => {
-      const proyectosEncontrados = await ProjectModel.find()
-        .populate("lider")
-        .populate("avances");
-      // .populate("inscripciones");
+      const proyectosEncontrados = await ProjectModel.find().populate([
+        {
+          path: "avances",
+          populate: [{ path: "creadoPor" }],
+        },
+        { path: "lider" },
+        // { path: "inscripciones",populate:[{}] },
+      ]);
       return proyectosEncontrados;
     },
     Proyecto: async (parent, args) => {
@@ -45,12 +49,42 @@ const resolversProyecto = {
       return proyectoActualizado;
     },
     crearObjetivos: async (parent, args) => {
-      objetivosCreados = await ProjectModel.findByIdAndUpdate(
-        args._id,
-        { ...args.campos },
+      const objetivosCreados = await ProjectModel.findByIdAndUpdate(
+        args.idProyecto,
+        {
+          $addToSet: {
+            objetivos: { ...args.campos },
+          },
+        },
         { new: true }
       );
+      return objetivosCreados;
     },
+    actualizarObjetivos: async (parent, args) => {
+      const objetivosActualizados = await ProjectModel.findByIdAndUpdate(
+        { id: args.idProyecto, objetivos: args.idObjetivo },
+        {
+          $set: {
+            "objetivos.$.descripcion": args.campos.descripcion,
+            "objetivos.$.tipo": args.campos.tipo,
+          },
+        },
+        { new: true }
+      );
+      return objetivosActualizados;
+    },
+    // eliminarObjetivos: async (parent, args) => {
+    //   const objetivosEliminados = await ProjectModel.findByIdAndUpdate(
+    //     args.idProyecto,
+    //     {
+    //       $addToSet: {
+    //         objetivos: { ...args.campos },
+    //       },
+    //     },
+    //     { new: true }
+    //   );
+    //   return objetivosEliminados;
+    // },
   },
 };
 
