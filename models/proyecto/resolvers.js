@@ -1,14 +1,14 @@
 import { UserModel } from "../usuario/usuario.js";
 import { ProjectModel } from "./proyecto.js";
 const resolversProyecto = {
-  Proyecto: {
-    lider: async (parent, args, context) => {
-      const usr = await UserModel.findOne({
-        _id: parent.lider.toString(),
-      });
-      return usr;
-    },
-  },
+  // Proyecto: {
+  //   lider: async (parent, args, context) => {
+  //     const usr = await UserModel.findOne({
+  //       _id: parent.lider.toString(),
+  //     });
+  //     return usr;
+  //   },
+  // },
   Query: {
     Proyectos: async (parent, args) => {
       const proyectosEncontrados = await ProjectModel.find().populate([
@@ -31,7 +31,9 @@ const resolversProyecto = {
       return proyectoEncontrado;
     },
     ProyectosLider: async (parent, args) => {
-      proyectosPorLider = await ProjectModel.find({ lider: args.lider });
+      const proyectosPorLider = await ProjectModel.find({ lider: args.lider });
+
+      return proyectosPorLider;
     },
   },
   Mutation: {
@@ -49,7 +51,7 @@ const resolversProyecto = {
     },
     actualizarProyecto: async (parent, args) => {
       const proyectoActualizado = await ProjectModel.findByIdAndUpdate(
-        { _id: args.id },
+        { _id: args._id },
         {
           ...args.campos,
         },
