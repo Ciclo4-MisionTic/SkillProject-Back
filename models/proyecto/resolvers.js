@@ -1,5 +1,13 @@
 import { ProjectModel } from "./proyecto.js";
 const resolversProyecto = {
+  Proyecto: {
+    lider: async (parent, args, context) => {
+      const usr = await UserModel.findOne({
+        _id: parent.lider.toString(),
+      });
+      return usr;
+    },
+  },
   Query: {
     Proyectos: async (parent, args) => {
       const proyectosEncontrados = await ProjectModel.find().populate([
@@ -7,7 +15,6 @@ const resolversProyecto = {
           path: "avances",
           populate: [{ path: "creadoPor" }],
         },
-        { path: "lider" },
         // { path: "inscripciones",populate:[{}] },
       ]);
       return proyectosEncontrados;
@@ -60,31 +67,34 @@ const resolversProyecto = {
       );
       return objetivosCreados;
     },
-    actualizarObjetivos: async (parent, args) => {
-      const objetivosActualizados = await ProjectModel.findByIdAndUpdate(
-        { id: args.idProyecto, objetivos: args.idObjetivo },
+    editarObjetivo: async (parent, args) => {
+      const proyectoEditado = await ProjectModel.findByIdAndUpdate(
+        args.idProyecto,
         {
           $set: {
-            "objetivos.$.descripcion": args.campos.descripcion,
-            "objetivos.$.tipo": args.campos.tipo,
+            [`objetivos.${args.indexObjetivo}.descripcion`]:
+              args.campos.descripcion,
+            [`objetivos.${args.indexObjetivo}.tipo`]: args.campos.tipo,
           },
         },
         { new: true }
       );
-      return objetivosActualizados;
+      return proyectoEditado;
     },
-    // eliminarObjetivos: async (parent, args) => {
-    //   const objetivosEliminados = await ProjectModel.findByIdAndUpdate(
-    //     args.idProyecto,
-    //     {
-    //       $addToSet: {
-    //         objetivos: { ...args.campos },
-    //       },
-    //     },
-    //     { new: true }
-    //   );
-    //   return objetivosEliminados;
-    // },
+    eliminarObjetivo: async (parent, args) => {
+      const proyectoObjetivo = await ProjectModel.findByIdAndUpdate(
+        { _id: args.idProyecto },
+        {
+          $pull: {
+            objetivos: {
+              _id: args.idObjetivo,
+            },
+          },
+        },
+        { new: true }
+      );
+      return proyectoObjetivo;
+    },
   },
 };
 
