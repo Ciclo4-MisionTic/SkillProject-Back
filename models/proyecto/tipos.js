@@ -12,7 +12,7 @@ const tiposProyecto = gql`
     lider: Usuario!
     objetivos: [Objetivos]
     avances: [Avance]
-    # inscripciones: [Inscripcion]
+    inscripciones: [Inscripcion]
   }
 
   type Objetivos {

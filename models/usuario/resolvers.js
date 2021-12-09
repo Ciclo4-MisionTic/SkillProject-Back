@@ -2,11 +2,11 @@ import { UserModel } from './usuario.js';
 import bcrypt from 'bcrypt';
 
 const resolversUsuario = {
-  // Usuario: {
-  //   inscripciones: async (parent, args, context) => {
-  //     return InscriptionModel.find({ estudiante: parent._id });
-  //   },
-  // },
+  Usuario: {
+    inscripciones: async (parent, args, context) => {
+      return InscriptionModel.find({ estudiante: parent._id });
+    },
+  },
   Query: {
     //HU_004: Como administrador podré ver la información de los usuarios registrados en la plataforma
     //HU_010: Como lider podré ver la información de los estudiantes registrados en la plataforma

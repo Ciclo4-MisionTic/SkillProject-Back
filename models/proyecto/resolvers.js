@@ -1,12 +1,17 @@
-import { UserModel } from "../usuario/usuario.js";
+// import { ModeloAvance } from "../avance/avance.js";
+// import { InscriptionModel } from "../inscripcion/inscripcion.js";
+// import { UserModel } from "../usuario/usuario.js";
 import { ProjectModel } from "./proyecto.js";
 const resolversProyecto = {
   // Proyecto: {
-  //   lider: async (parent, args, context) => {
-  //     const usr = await UserModel.findOne({
-  //       _id: parent.lider.toString(),
-  //     });
-  //     return usr;
+  //   // lider: async (parent, args, context) => {
+  //   //   return await UserModel.find({ Usuario: parent._id });
+  //   // },
+  //   // avances: async (parent, args, context) => {
+  //   //   return await ModeloAvance.find({ creadoPor: parent._id });
+  //   // },
+  //   inscripciones: async (parent, args, context) => {
+  //     return await InscriptionModel.find({ estudiante: parent.estudiante._id });
   //   },
   // },
   Query: {
@@ -16,18 +21,28 @@ const resolversProyecto = {
           path: "avances",
           populate: [{ path: "creadoPor" }],
         },
+        {
+          path: "inscripciones",
+          populate: [{ path: "estudiante" }],
+        },
         { path: "lider" },
-        // { path: "inscripciones",populate:[{}] },
       ]);
       return proyectosEncontrados;
     },
     Proyecto: async (parent, args) => {
       const proyectoEncontrado = await ProjectModel.findOne({
         _id: args._id,
-      })
-        .populate("lider")
-        .populate("avances");
-      // .populate("inscripciones");
+      }).populate([
+        {
+          path: "avances",
+          populate: [{ path: "creadoPor" }],
+        },
+        {
+          path: "inscripciones",
+          populate: [{ path: "estudiante" }],
+        },
+        { path: "lider" },
+      ]);
       return proyectoEncontrado;
     },
     ProyectosLider: async (parent, args) => {
