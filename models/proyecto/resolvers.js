@@ -1,6 +1,19 @@
-import { UserModel } from "../usuario/usuario.js";
+// import { ModeloAvance } from "../avance/avance.js";
+// import { InscriptionModel } from "../inscripcion/inscripcion.js";
+// import { UserModel } from "../usuario/usuario.js";
 import { ProjectModel } from "./proyecto.js";
 const resolversProyecto = {
+  // Proyecto: {
+  //   // lider: async (parent, args, context) => {
+  //   //   return await UserModel.find({ Usuario: parent._id });
+  //   // },
+  //   // avances: async (parent, args, context) => {
+  //   //   return await ModeloAvance.find({ creadoPor: parent._id });
+  //   // },
+  //   inscripciones: async (parent, args, context) => {
+  //     return await InscriptionModel.find({ estudiante: parent.estudiante._id });
+  //   },
+  // },
   Query: {
     Proyectos: async (parent, args) => {
       const proyectosEncontrados = await ProjectModel.find().populate([
