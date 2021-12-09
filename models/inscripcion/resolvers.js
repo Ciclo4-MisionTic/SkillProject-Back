@@ -6,20 +6,55 @@ import { InscriptionModel } from './inscripcion.js';
 const resolverInscripciones = {
   Query: {
     //Llamar todas las inscripciones: importante para las validaciones en proyecto y avance
-    Inscripciones: async (parent, args) => {
+    /*Inscripciones: async (parent, args) => {
       const inscripciones = await InscriptionModel.find().populate('proyecto').populate('estudiante');
     
       return inscripciones;
-    },
+    },*/
+    Inscripciones: async (parent, args, context) => {
+      let filtro = {};
+      console.log("id del userdata del context",context.userData._id )
+      console.log("rol del userdata del context",context.userData.rol )
+      if (context.userData) {
+        if (context.userData.rol === 'LIDER') {
+          
+          const projects = await ProjectModel.find({ lider: context.userData._id });
+          const projectList = projects.map((p) => p._id.toString());
+          filtro = {
+            proyecto: {
+              $in: projectList,
+            },
+          };
+          if (Object.keys(filtro)===0){
+            return false
+           
 
-    //Llamar a las inscripciones de solo un proyecto, puede servir de filtro para ingresar avances 
+          }else{
+            const inscripciones = await InscriptionModel.find({ ...filtro }).populate('estudiante').populate('proyecto');
+            console.log("retorno de inscripciones", inscripciones)
+            return inscripciones;
+            
+          }
+          
+        }else{
+          return false;
+
+          }
+        }
+      },
+      //Llamar a las inscripciones de solo un proyecto, puede servir de filtro para ingresar avances 
     //HU_015
     InscripcionesAUnProyecto: async (parent, args) => {
       const inscripcion = await InscriptionModel.find({ proyecto: args.proyecto }).populate('estudiante').populate('proyecto');
       return inscripcion;
     },
+
+    },
+    
+
+    
    
-  },
+
   Mutation: {
 
     //Crea una inscripción, sale en la tabla de proyectos 
