@@ -1,4 +1,5 @@
 import { InscriptionModel } from './inscripcion.js';
+import { ProjectModel } from '../proyecto/proyecto.js';
 
 
 
@@ -13,29 +14,19 @@ const resolverInscripciones = {
     },*/
     Inscripciones: async (parent, args, context) => {
       let filtro = {};
-      console.log("id del userdata del context",context.userData._id )
-      console.log("rol del userdata del context",context.userData.rol )
       if (context.userData) {
         if (context.userData.rol === 'LIDER') {
-          
           const projects = await ProjectModel.find({ lider: context.userData._id });
           const projectList = projects.map((p) => p._id.toString());
           filtro = {
             proyecto: {
               $in: projectList,
             },
-          };
-          if (Object.keys(filtro)===0){
-            return false
-           
-
-          }else{
-            const inscripciones = await InscriptionModel.find({ ...filtro }).populate('estudiante').populate('proyecto');
-            console.log("retorno de inscripciones", inscripciones)
-            return inscripciones;
-            
-          }
-          
+          }; 
+          const inscripciones = await InscriptionModel.find({ ...filtro }).populate('estudiante').populate('proyecto');
+          return inscripciones;
+    
+          //Seguridad por si depronto pasa alguien que no es lider
         }else{
           return false;
 
@@ -59,15 +50,21 @@ const resolverInscripciones = {
 
     //Crea una inscripción, sale en la tabla de proyectos 
     //HU_20
-    crearInscripcion: async (parent, args) => {
-      const inscripcionCreada = await InscriptionModel.create({
-        estado: "PENDIENTE",
-        proyecto: args.proyecto,
-        estudiante: args.estudiante,
-        fechaEgreso: null,
-        fechaIngreso:null,
-      });
-      return inscripcionCreada;
+    crearInscripcion: async (parent, args, context) => {
+      if (context.userData.rol=='ESTUDIANTE'){
+        const proyectoInscribir = await ProjectModel.find({_id: args.proyecto})
+        if (proyectoInscribir.estado==="ACTIVO"){
+        const inscripcionCreada = await InscriptionModel.create({
+          estado: "PENDIENTE",
+          proyecto: args.proyecto,
+          estudiante: context.userData._id,
+          fechaEgreso: null,
+          fechaIngreso:null,
+        });
+        return inscripcionCreada;}else{
+          return false 
+        }
+    }
     },
 
     //Edición de una inscripción para aprobarla en un proyecto, resive el id de la inscripción 
