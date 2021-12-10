@@ -57,7 +57,7 @@ const resolverInscripciones = {
         const inscripcionCreada = await InscriptionModel.create({
           estado: "PENDIENTE",
           proyecto: args.proyecto,
-          estudiante: context.userData._id,
+          estudiante: args.estudiante,
           fechaEgreso: null,
           fechaIngreso:null,
         });
