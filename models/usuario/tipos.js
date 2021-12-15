@@ -9,6 +9,7 @@ const tiposUsuario = gql`
     correo: String!
     rol: Enum_Rol!
     estado: Enum_EstadoUsuario
+    foto: String
     inscripciones: [Inscripcion]
     avancesCreados: [Avance]
     proyectosLiderados: [Proyecto]
@@ -20,6 +21,15 @@ const tiposUsuario = gql`
     correo: String
     rol: Enum_Rol
     estado: Enum_EstadoUsuario
+  }
+
+  input CamposEditarPerfil {
+    nombre: String
+    apellido: String
+    identificacion: String
+    foto: String
+    correo: String
+    password: String
   }
 
   type Query {
@@ -46,15 +56,8 @@ const tiposUsuario = gql`
       estado: Enum_EstadoUsuario
     ): Usuario
 
-    editarPerfil(
-      _id: String!
-      nombre: String
-      apellido: String
-      identificacion: String
-      correo: String
-      rol: Enum_Rol
-      password: String
-    ): Usuario
+    editarPerfil(_id: String!, campos: CamposEditarPerfil!): Usuario
+
     eliminarUsuario(_id: String, correo: String): Usuario
   }
 `;
