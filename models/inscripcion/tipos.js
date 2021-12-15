@@ -25,6 +25,7 @@ const tiposInscripcion = gql`
     Inscripciones: [Inscripcion]
     InscripcionesAUnProyecto(proyecto:String!):[Inscripcion]
     InscripcionesEgreso: [Inscripcion]
+    InscripcionesAvance: [Proyecto]
   }
 
   type Mutation {
