@@ -40,6 +40,28 @@ const resolverInscripciones = {
       return inscripcion;
     },
 
+    InscripcionesAvance: async (parent, args, context) => {
+      let filtro1 = {};
+      if (context.userData) {
+        if (context.userData.rol === 'ESTUDIANTE') {
+          const inscriptions = await InscriptionModel.find({ estudiante:context.userData._id });
+          const projectList1 = inscriptions.map((p) => p.proyecto.toString());
+          filtro1 = {
+            _id: {
+              $in: projectList1,
+            },
+          }; 
+          const proyectos = await ProjectModel.find({ ...filtro1 }).populate('lider').populate('avances');
+          return proyectos;
+    
+          //Seguridad por si depronto pasa alguien que no es lider
+        }else{
+          return false;
+
+          }
+        }
+      },
+
     },
     
 
