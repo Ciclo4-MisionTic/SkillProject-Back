@@ -10,6 +10,7 @@ const tiposUsuario = gql`
     rol: Enum_Rol!
     estado: Enum_EstadoUsuario
     foto: String
+    password: String
     inscripciones: [Inscripcion]
     avancesCreados: [Avance]
     proyectosLiderados: [Proyecto]
