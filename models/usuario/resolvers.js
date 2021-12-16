@@ -57,22 +57,12 @@ const resolversUsuario = {
     },
     //HU_003: Como usuario podré ingresar los datos que deseo actualizar
     editarPerfil: async (parent, args) => {
-      const salt = await bcrypt.genSalt(10);
-      const hashedPassword = await bcrypt.hash(args.password, salt);
-      const perfilEditado = await UserModel.findByIdAndUpdate(
+      const usuarioEditado = await UserModel.findOneAndUpdate(
         args._id,
-        {
-          nombre: args.nombre,
-          apellido: args.apellido,
-          identificacion: args.identificacion,
-          correo: args.correo,
-          rol: args.rol,
-          password: hashedPassword,
-        },
+        { ...args.campos },
         { new: true }
       );
-
-      return perfilEditado;
+      return usuarioEditado;
     },
     eliminarUsuario: async (parent, args) => {
       if (Object.keys(args).includes('_id')) {
