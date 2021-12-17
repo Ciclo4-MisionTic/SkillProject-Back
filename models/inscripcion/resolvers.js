@@ -89,7 +89,6 @@ const resolverInscripciones = {
     //Crea una inscripción, sale en la tabla de proyectos
     //HU_20
     crearInscripcion: async (parent, args, context) => {
-<<<<<<< HEAD
       if (context.userData.rol==='ESTUDIANTE'){
         
         const inscripcionCreada = await InscriptionModel.create({
@@ -104,25 +103,6 @@ const resolverInscripciones = {
           return false 
         }
     
-=======
-      if (context.userData.rol == "ESTUDIANTE") {
-        const proyectoInscribir = await ProjectModel.find({
-          _id: args.proyecto,
-        });
-        if (proyectoInscribir.estado === "ACTIVO") {
-          const inscripcionCreada = await InscriptionModel.create({
-            estado: "PENDIENTE",
-            proyecto: args.proyecto,
-            estudiante: args.estudiante,
-            fechaEgreso: null,
-            fechaIngreso: null,
-          });
-          return inscripcionCreada;
-        } else {
-          return false;
-        }
-      }
->>>>>>> 9b1d28894f1a0fb70f94bdc4ceb5197b32789c02
     },
 
     //Edición de una inscripción para aprobarla en un proyecto, resive el id de la inscripción
