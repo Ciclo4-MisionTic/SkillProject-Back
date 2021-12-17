@@ -1,15 +1,33 @@
-import { ModeloAvance } from './avance.js';
+import { ProjectModel } from "../proyecto/proyecto.js";
+import { UserModel } from "../usuario/usuario.js";
+import { ModeloAvance } from "./avance.js";
 
 const resolversAvance = {
+  // Avance: {
+  //   proyecto: async (parent, args, context) => {
+  //     const proj = await ProjectModel.findOne({
+  //       _id: parent.proyecto.toString(),
+  //     });
+  //     return proj;
+  //   },
+  //   creadoPor: async (parent, args, context) => {
+  //     const usr = await UserModel.findOne({
+  //       _id: parent.creadoPor.toString(),
+  //     });
+  //     return usr;
+  //   },
+  // },
   Query: {
     Avances: async (parent, args) => {
-      const avances = await ModeloAvance.find().populate('proyecto').populate('creadoPor');
+      const avances = await ModeloAvance.find()
+        .populate("proyecto")
+        .populate("creadoPor");
       return avances;
     },
     filtrarAvance: async (parents, args) => {
       const avanceFiltrado = await ModeloAvance.find({ proyecto: args._id })
-        .populate('proyecto')
-        .populate('creadoPor');
+        .populate("proyecto")
+        .populate("creadoPor");
       return avanceFiltrado;
     },
   },
@@ -26,29 +44,27 @@ const resolversAvance = {
     },
     editarObservaciones: async (parents, args) => {
       const observacionEditado = await ModeloAvance.findByIdAndUpdate(
-          args._id,
-          {
-            observaciones: args.observaciones,
-          },
-          { new: true }
-        );
-  
-        return observacionEditado;
+        args._id,
+        {
+          observaciones: args.observaciones,
+        },
+        { new: true }
+      );
+
+      return observacionEditado;
     },
     editarDescripcion: async (parents, args) => {
       const descripcionEditado = await ModeloAvance.findByIdAndUpdate(
-          args._id,
-          {
-            descripcion: args.descripcion,
-          },
-          { new: true }
-        );
-  
-        return descripcionEditado;
+        args._id,
+        {
+          descripcion: args.descripcion,
+        },
+        { new: true }
+      );
+
+      return descripcionEditado;
     },
-    
   },
 };
 
 export { resolversAvance };
-
