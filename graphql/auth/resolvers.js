@@ -15,6 +15,7 @@ const resolversAutenticacion = {
         correo: args.correo,
         rol: args.rol,
         password: hashedPassword,
+        estado:"PENDIENTE",
       });
       console.log("usuario creado", usuarioCreado);
       return {
@@ -25,6 +26,7 @@ const resolversAutenticacion = {
           identificacion: usuarioCreado.identificacion,
           correo: usuarioCreado.correo,
           rol: usuarioCreado.rol,
+          estado:usuarioCreado.estado,
         }),
       };
     },
@@ -41,6 +43,7 @@ const resolversAutenticacion = {
             identificacion: usuarioEcontrado.identificacion,
             correo: usuarioEcontrado.correo,
             rol: usuarioEcontrado.rol,
+            estado:usuarioEcontrado.estado,
           }),
         };
       }
@@ -61,6 +64,7 @@ const resolversAutenticacion = {
             identificacion: context.userData.identificacion,
             correo: context.userData.correo,
             rol: context.userData.rol,
+            estado:context.userData.estado,
           }),
         };
       }
