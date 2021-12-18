@@ -89,23 +89,20 @@ const resolverInscripciones = {
     //Crea una inscripción, sale en la tabla de proyectos
     //HU_20
     crearInscripcion: async (parent, args, context) => {
-      if (context.userData.rol == "ESTUDIANTE") {
-        const proyectoInscribir = await ProjectModel.find({
-          _id: args.proyecto,
+      if (context.userData.rol==='ESTUDIANTE'){
+        
+        const inscripcionCreada = await InscriptionModel.create({
+          estado: "PENDIENTE",
+          proyecto: args.proyecto,
+          estudiante: args.estudiante,
+          fechaEgreso: null,
+          fechaIngreso:null,
         });
-        if (proyectoInscribir.estado === "ACTIVO") {
-          const inscripcionCreada = await InscriptionModel.create({
-            estado: "PENDIENTE",
-            proyecto: args.proyecto,
-            estudiante: args.estudiante,
-            fechaEgreso: null,
-            fechaIngreso: null,
-          });
-          return inscripcionCreada;
-        } else {
-          return false;
+        return inscripcionCreada;
+      }else{
+          return false 
         }
-      }
+    
     },
 
     //Edición de una inscripción para aprobarla en un proyecto, resive el id de la inscripción
