@@ -47,6 +47,11 @@ const resolversAutenticacion = {
           }),
         };
       }
+      else {
+        return {
+          error: "Usuario o contraseña incorrectos",
+        };
+      }
     },
 
     refreshToken: async (parent, args, context) => {

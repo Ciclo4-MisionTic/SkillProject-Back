@@ -73,9 +73,14 @@ const resolversProyecto = {
     },
   },
   Mutation: {
-    crearProyecto: async (parent, args) => {
+    crearProyecto: async (parent, args, context) => {
       const proyectoCreado = await ProjectModel.create({
-        ...args.campos,
+        nombre: args.nombre,
+        fechaInicio: args.fechaInicio,
+        fechaFin: args.fechaFin,
+        presupuesto: args.presupuesto,
+        lider: args.lider,
+        objetivos: args.objetivos,
       });
       return proyectoCreado;
     },
