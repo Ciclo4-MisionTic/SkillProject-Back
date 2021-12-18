@@ -48,7 +48,9 @@ const resolversAutenticacion = {
         };
       }
       else {
-        error: "Usuario o contraseña incorrectos";
+        return {
+          error: "Usuario o contraseña incorrectos",
+        };
       }
     },
 
