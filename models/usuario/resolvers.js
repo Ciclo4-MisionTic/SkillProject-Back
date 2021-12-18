@@ -1,5 +1,5 @@
-import { UserModel } from './usuario.js';
-import bcrypt from 'bcrypt';
+import { UserModel } from "./usuario.js";
+import bcrypt from "bcrypt";
 
 const resolversUsuario = {
   Usuario: {
@@ -11,7 +11,7 @@ const resolversUsuario = {
     //HU_004: Como administrador podré ver la información de los usuarios registrados en la plataforma
     //HU_010: Como lider podré ver la información de los estudiantes registrados en la plataforma
     Usuarios: async (parent, args, context) => {
-      const usuarios = await UserModel.find({...args.filtro});
+      const usuarios = await UserModel.find({ ...args.filtro });
       return usuarios;
     },
     Usuario: async (parent, args) => {
@@ -32,7 +32,7 @@ const resolversUsuario = {
         password: hashedPassword,
       });
 
-      if (Object.keys(args).includes('estado')) {
+      if (Object.keys(args).includes("estado")) {
         usuarioCreado.estado = args.estado;
       }
 
@@ -65,11 +65,15 @@ const resolversUsuario = {
       return usuarioEditado;
     },
     eliminarUsuario: async (parent, args) => {
-      if (Object.keys(args).includes('_id')) {
-        const usuarioEliminado = await UserModel.findOneAndDelete({ _id: args._id });
+      if (Object.keys(args).includes("_id")) {
+        const usuarioEliminado = await UserModel.findOneAndDelete({
+          _id: args._id,
+        });
         return usuarioEliminado;
-      } else if (Object.keys(args).includes('correo')) {
-        const usuarioEliminado = await UserModel.findOneAndDelete({ correo: args.correo });
+      } else if (Object.keys(args).includes("correo")) {
+        const usuarioEliminado = await UserModel.findOneAndDelete({
+          correo: args.correo,
+        });
         return usuarioEliminado;
       }
     },

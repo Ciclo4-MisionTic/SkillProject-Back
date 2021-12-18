@@ -4,14 +4,23 @@
 import { ProjectModel } from "./proyecto.js";
 const resolversProyecto = {
   // Proyecto: {
-  //   // lider: async (parent, args, context) => {
-  //   //   return await UserModel.find({ Usuario: parent._id });
-  //   // },
-  //   // avances: async (parent, args, context) => {
-  //   //   return await ModeloAvance.find({ creadoPor: parent._id });
-  //   // },
+  //   lider: async (parent, args, context) => {
+  //     const usr = await UserModel.findOne({
+  //       _id: parent.lider.toString(),
+  //     });
+  //     return usr;
+  //   },
+  //   avances: async (parent, args, context) => {
+  //     const avc = await ModeloAvance.find({
+  //       _id: parent.avances,
+  //     });
+  //     return avc;
+  //   },
   //   inscripciones: async (parent, args, context) => {
-  //     return await InscriptionModel.find({ estudiante: parent.estudiante._id });
+  //     const ins = await InscriptionModel.find({
+  //       _id: parent.inscripciones,
+  //     });
+  //     return ins;
   //   },
   // },
   Query: {
@@ -46,7 +55,19 @@ const resolversProyecto = {
       return proyectoEncontrado;
     },
     ProyectosLider: async (parent, args) => {
-      const proyectosPorLider = await ProjectModel.find({ lider: args.lider });
+      const proyectosPorLider = await ProjectModel.find({
+        lider: args.lider,
+      }).populate([
+        {
+          path: "avances",
+          populate: [{ path: "creadoPor" }],
+        },
+        {
+          path: "inscripciones",
+          populate: [{ path: "estudiante" }],
+        },
+        { path: "lider" },
+      ]);
 
       return proyectosPorLider;
     },
