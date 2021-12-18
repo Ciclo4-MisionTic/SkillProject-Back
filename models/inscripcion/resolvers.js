@@ -59,6 +59,15 @@ const resolverInscripciones = {
       return inscripcion;
     },
 
+    InscripcionDelEstudiante: async (parent, args) => {
+      const inscripcionEstudiante = await InscriptionModel.findOne({
+        estudiante: args.estudiante,
+        proyecto: args.proyecto,
+      })
+      return inscripcionEstudiante;
+    },
+
+
     InscripcionesAvance: async (parent, args, context) => {
       let filtro1 = {};
       if (context.userData) {

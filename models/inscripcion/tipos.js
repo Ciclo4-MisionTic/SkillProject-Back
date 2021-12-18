@@ -26,6 +26,10 @@ const tiposInscripcion = gql`
     InscripcionesAUnProyecto(proyecto:String!):[Inscripcion]
     InscripcionesEgreso: [Inscripcion]
     InscripcionesAvance: [Proyecto]
+    InscripcionDelEstudiante(
+      estudiante:String!
+      proyecto:String!
+      ):Inscripcion
   }
 
   type Mutation {
@@ -44,6 +48,7 @@ const tiposInscripcion = gql`
       eliminarInscripcion(_id: String!): Inscripcion
       egresarInscripciones(proyecto:String!): Contador
       egresarInscripcionesFaseProyecto(proyecto:String!): Contador
+      
   }
 `;
 
