@@ -57,7 +57,7 @@ const resolversUsuario = {
     },
     //HU_003: Como usuario podré ingresar los datos que deseo actualizar
     editarPerfil: async (parent, args) => {
-      const usuarioEditado = await UserModel.findOneAndUpdate(
+      const usuarioEditado = await UserModel.findByIdAndUpdate(
         args._id,
         { ...args.campos },
         { new: true }
